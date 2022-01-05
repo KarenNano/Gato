@@ -10,10 +10,14 @@ import { DynamicErrorStateMatcher } from '../shared/dynamicErrorStateMatcher';
 })
 export class PlayerNamesComponent implements OnInit {
 
-  // Names Form
-  NamesForm!: FormGroup;
+  // Multiplayer Form
+  MultiplayerForm!: FormGroup;
   player1!: FormControl;
   player2!: FormControl;
+
+  // Solo Form
+  SoloForm!: FormGroup;
+  soloName!: FormControl;
 
   public dynamicMatcher = new DynamicErrorStateMatcher();
 
@@ -29,25 +33,37 @@ export class PlayerNamesComponent implements OnInit {
   }
 
   private createFormControls(): void {
+    // Multiplayer Form
     this.player1 = new FormControl('', { updateOn: 'change', validators: [Validators.required] });
     this.player2 = new FormControl('', { updateOn: 'change', validators: [Validators.required] });
+    // Solo Form
+    this.soloName = new FormControl('', { updateOn: 'change', validators: [Validators.required] });
   }
 
   private createForm(): void {
-    this.NamesForm = new FormGroup({
+    this.MultiplayerForm = new FormGroup({
       'player1': this.player1,
       'player2': this.player2,
     });
+    this.SoloForm = new FormGroup({
+      'soloName': this.soloName
+    })
   }
 
   private initializeRegistrationFormValues(): void {
-    this.NamesForm.patchValue({
+    this.MultiplayerForm.patchValue({
       player1: this.data.player1,
       player2: this.data.player2
     });
+    this.SoloForm.patchValue({
+      soloName: this.data.player1
+    })
   }
 
-  beginGame() {
-    this.dialogRef.close({player1: this.player1.value, player2: this.player2.value});
+  beginGame(mode: string) {
+    if (mode === 'multi')
+      this.dialogRef.close({player1: this.player1.value, player2: this.player2.value, gameMode: mode});
+    else
+      this.dialogRef.close({player1: this.soloName.value, player2: '', gameMode: mode});
   }
 }

@@ -5,7 +5,7 @@
     </div>
   </div>
   <div class="row m-0">
-    <h3 *ngIf="player1Name !== ''">Turno de: <span [ngClass]="{'color-red': player1, 'color-blue': !player1}">{{ player1? player1Name + ' (Cruz)' : player2Name + ' (Círculo)' }}</span></h3>
+    <h3 *ngIf="player1Name !== '' && gameMode === 'multi'">Turno de: <span [ngClass]="{'color-red': player1, 'color-blue': !player1}">{{ player1? player1Name + ' (Cruz)' : player2Name + ' (Círculo)' }}</span></h3>
   </div>
   <!--Tic-Tac-Toe Game-->
   <div class="row m-0">

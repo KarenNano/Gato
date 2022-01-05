@@ -19,6 +19,9 @@ export class AppComponent {
     this.openPlayerNameDialog();
   }
 
+  // Game Mode
+  gameMode = 'multi';
+
   // States of buttons
   state1 = '';
   state2 = '';
@@ -80,6 +83,13 @@ export class AppComponent {
     this.checkWon();
     // Change player turn
     this.player1 = !this.player1;
+    // Generate turn of computer
+    if (!this.player1 && this.gameMode === 'solo' && this.activeGame) {
+      setTimeout(() => {
+        let computerTurn = this.generateRandomTurn();
+        this.changeState('button' + computerTurn, computerTurn);
+      }, 100);
+    }
   }
 
   // Check if game is won
@@ -101,6 +111,19 @@ export class AppComponent {
         this.winner = this.player2Name;
       }
     }
+  }
+
+  // Generate random turn for computer
+  generateRandomTurn() {
+    let valid;
+    let number;
+    do {
+      valid = true;
+      number = Math.floor((Math.random() * 9) + 1);
+      if (this.select1.includes(number) || this.select2.includes(number))
+        valid = false;
+    } while (!valid);
+    return number;
   }
 
   // Reset Game
@@ -143,12 +166,13 @@ export class AppComponent {
     let dialogRef = this.dialog.open(PlayerNamesComponent, {
       height: 'auto',
       width: '600px',
-      data: {player1: this.player1Name, player2: this.player2Name},
+      data: {player1: this.player1Name, player2: this.gameMode === 'solo' ? '' : this.player2Name, gameMode: this.gameMode},
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
       this.player1Name = result.player1;
-      this.player2Name = result.player2;
+      this.player2Name = result.player2 === '' ? 'Computadora' : result.player2;
+      this.gameMode = result.gameMode;
     })
   }
 }

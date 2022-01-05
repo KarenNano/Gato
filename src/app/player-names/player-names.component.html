@@ -1,34 +1,67 @@
-<form [formGroup]="NamesForm" (ngSubmit)="beginGame()">
-    <div class="container px-0">
-        <div class="row m-0 justify-content-center">
-            <div class="col-auto">
-                <h3 class="no-margin-bottom">¡Bienvenidos!</h3>
-            </div>
-        </div>
-        <div class="row m-0 justify-content-center">
-            <div class="col-auto">  
-                <p>Ingresen sus nombres para comenzar</p>
-            </div>
-        </div>
-        <div class="row m-0">
-            <mat-form-field appearance="outline" [ngClass]="{'margin-bottom': player1.invalid && (player1.dirty || player1.touched)}">
-                <mat-label>Jugador 1 (Cruz)</mat-label>
-                <input matInput placeholder="Nombre del jugador 1" formControlName="player1" [errorStateMatcher]="dynamicMatcher" autocomplete="off">
-                <mat-error *ngIf="player1.invalid">Este campo es requerido</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="row m-0 margin-bottom">
-            <mat-form-field appearance="outline" [ngClass]="{'margin-bottom': player2.invalid && (player2.dirty || player2.touched)}">
-                <mat-label>Jugador 2 (Círculo)</mat-label>
-                <input matInput placeholder="Nombre del jugador 2" formControlName="player2" [errorStateMatcher]="dynamicMatcher" autocomplete="off">
-                <mat-error *ngIf="player2.invalid">Este campo es requerido</mat-error>
-            </mat-form-field>
-        </div>
-        <div class="row m-0 justify-content-center">
-            <div class="col-auto">
-                <button mat-raised-button color="accent" type="submit" [disabled]="!NamesForm.valid">COMENZAR</button>
-            </div>
+<div class="container px-0">
+    <div class="row m-0 justify-content-center">
+        <div class="col-auto">
+            <h3>Juego de gato</h3>
         </div>
     </div>
-</form>
+    <div class="row m-0 justify-content-end">
+        <div class="col-auto">
+            <mat-button-toggle-group name="gameMode" aria-label="Game Mode" #group="matButtonToggleGroup" value="{{ data.gameMode }}">
+                <mat-button-toggle value="multi" class="game-mode">2 jugadores</mat-button-toggle>
+                <mat-button-toggle value="solo" class="game-mode">1 jugador</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+    </div>
+    <!--Multiplayer Form-->
+    <ng-container *ngIf="group.value === 'multi'">
+        <form [formGroup]="MultiplayerForm" (ngSubmit)="beginGame(group.value)">
+            <div class="row m-0 justify-content-center">
+                <div class="col-auto">  
+                    <p>Ingresen sus nombres para comenzar</p>
+                </div>
+            </div>
+            <div class="row m-0">
+                <mat-form-field appearance="outline" [ngClass]="{'margin-bottom': player1.invalid && (player1.dirty || player1.touched)}">
+                    <mat-label>Jugador 1 (Cruz)</mat-label>
+                    <input matInput placeholder="Nombre del jugador 1" formControlName="player1" [errorStateMatcher]="dynamicMatcher" autocomplete="off">
+                    <mat-error *ngIf="player1.invalid">Este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row m-0 margin-bottom">
+                <mat-form-field appearance="outline" [ngClass]="{'margin-bottom': player2.invalid && (player2.dirty || player2.touched)}">
+                    <mat-label>Jugador 2 (Círculo)</mat-label>
+                    <input matInput placeholder="Nombre del jugador 2" formControlName="player2" [errorStateMatcher]="dynamicMatcher" autocomplete="off">
+                    <mat-error *ngIf="player2.invalid">Este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row m-0 justify-content-center">
+                <div class="col-auto">
+                    <button mat-raised-button color="accent" type="submit" [disabled]="!MultiplayerForm.valid">COMENZAR</button>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+    <!--Solo Form-->
+    <ng-container *ngIf="group.value === 'solo'">
+        <form [formGroup]="SoloForm" (ngSubmit)="beginGame(group.value)">
+            <div class="row m-0 justify-content-center">
+                <div class="col-auto">  
+                    <p>Ingresa tu nombre para comenzar</p>
+                </div>
+            </div>
+            <div class="row m-0">
+                <mat-form-field appearance="outline" [ngClass]="{'margin-bottom': soloName.invalid && (soloName.dirty || soloName.touched)}">
+                    <mat-label>Jugador 1 (Cruz)</mat-label>
+                    <input matInput placeholder="Escribe tu nombre" formControlName="soloName" [errorStateMatcher]="dynamicMatcher" autocomplete="off">
+                    <mat-error *ngIf="soloName.invalid">Este campo es requerido</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row m-0 justify-content-center">
+                <div class="col-auto">
+                    <button mat-raised-button color="accent" type="submit" [disabled]="!SoloForm.valid">COMENZAR</button>
+                </div>
+            </div>
+        </form>
+    </ng-container>
+</div>
 
