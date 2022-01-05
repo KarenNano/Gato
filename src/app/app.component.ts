@@ -1,4 +1,6 @@
+import { PlayerNamesComponent } from './player-names/player-names.component';
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Gato';
+
+  constructor(
+    public dialog: MatDialog
+  ) {}
+
+  ngOnInit() {
+    // Ask for player names
+    this.openPlayerNameDialog();
+  }
 
   // States of buttons
   state1 = '';
@@ -34,6 +45,10 @@ export class AppComponent {
   // Player selected squares
   select1: number[] = [];
   select2: number[] = [];
+
+  // Player names
+  player1Name = '';
+  player2Name = '';
 
   // Change state of a button when clicked
   changeState(element: string, button: number) {
@@ -78,12 +93,12 @@ export class AppComponent {
       // If player 1 has positions equal to some winning position, player 1 wins
       if (this.select1.includes(combination[0]) && this.select1.includes(combination[1]) && this.select1.includes(combination[2])) {
         this.activeGame = false;
-        this.winner = "Jugador 1";
+        this.winner = this.player1Name;
       }
       // If player 2 has positions equal to some winning position, player 2 wins
       else if (this.select2.includes(combination[0]) && this.select2.includes(combination[1]) && this.select2.includes(combination[2])) {
         this.activeGame = false;
-        this.winner = "Jugador 2";
+        this.winner = this.player2Name;
       }
     }
   }
@@ -119,5 +134,21 @@ export class AppComponent {
     // Reset selected squares
     this.select1 = [];
     this.select2 = [];
+    // Ask for names again
+    this.openPlayerNameDialog();
+  }
+
+  // Open Dialog
+  openPlayerNameDialog() {
+    let dialogRef = this.dialog.open(PlayerNamesComponent, {
+      height: 'auto',
+      width: '600px',
+      data: {player1: this.player1Name, player2: this.player2Name},
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.player1Name = result.player1;
+      this.player2Name = result.player2;
+    })
   }
 }
