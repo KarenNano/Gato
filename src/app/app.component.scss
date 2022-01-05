@@ -15,15 +15,23 @@
     border-bottom: 4px solid #000;
 }
 
-.red {
+.color-red {
     color: red !important;
+}
+
+.color-blue {
+    color: blue !important;
+}
+
+.red {
+    @extend .color-red;
     cursor: default !important;
     font-size: 40px;
     font-weight: bold;
 }
 
 .blue {
-    color: blue !important;
+    @extend .color-blue;
     cursor: default !important;
     font-size: 40px;
     font-weight: bold;
