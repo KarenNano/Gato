@@ -11,36 +11,84 @@
   <div class="row m-0">
     <div class="row m-0">
       <div class="col-4 border-right border-bottom">
-        <button mat-button class="square" (click)="changeState($event.target!, 1)" [disabled]="state1 !== '' || !activeGame" [ngClass]="{'red': state1 === 'cross', 'blue': state1 === 'circle'}"></button>
+        <button mat-button class="square" id="button1"
+                (click)="changeState('button1', 1)" 
+                [disabled]="state1 !== '' || !activeGame" 
+                [ngClass]="{'red': state1 === 'cross', 'blue': state1 === 'circle'}">
+        </button>
       </div>
       <div class="col-4 border-right border-bottom">
-        <button mat-button class="square" (click)="changeState($event.target!, 2)" [disabled]="state2 !== '' || !activeGame" [ngClass]="{'red': state2 === 'cross', 'blue': state2 === 'circle'}"></button>
+        <button mat-button class="square" id="button2"
+                (click)="changeState('button2', 2)" 
+                [disabled]="state2 !== '' || !activeGame" 
+                [ngClass]="{'red': state2 === 'cross', 'blue': state2 === 'circle'}">
+        </button>
       </div>
       <div class="col-4 border-bottom">
-        <button mat-button class="square" (click)="changeState($event.target!, 3)" [disabled]="state3 !== '' || !activeGame" [ngClass]="{'red': state3 === 'cross', 'blue': state3 === 'circle'}"></button>
+        <button mat-button class="square" id="button3"
+                (click)="changeState('button3', 3)" 
+                [disabled]="state3 !== '' || !activeGame" 
+                [ngClass]="{'red': state3 === 'cross', 'blue': state3 === 'circle'}">
+        </button>
       </div>
     </div>
     <div class="row m-0">
       <div class="col-4 border-right border-bottom">
-        <button mat-button class="square" (click)="changeState($event.target!, 4)" [disabled]="state4 !== '' || !activeGame" [ngClass]="{'red': state4 === 'cross', 'blue': state4 === 'circle'}"></button>
+        <button mat-button class="square" id="button4"
+                (click)="changeState('button4', 4)" 
+                [disabled]="state4 !== '' || !activeGame" 
+                [ngClass]="{'red': state4 === 'cross', 'blue': state4 === 'circle'}">
+        </button>
       </div>
       <div class="col-4 border-right border-bottom">
-        <button mat-button class="square" (click)="changeState($event.target!, 5)" [disabled]="state5 !== '' || !activeGame" [ngClass]="{'red': state5 === 'cross', 'blue': state5 === 'circle'}"></button>
+        <button mat-button class="square" id="button5" 
+                (click)="changeState('button5', 5)" 
+                [disabled]="state5 !== '' || !activeGame" 
+                [ngClass]="{'red': state5 === 'cross', 'blue': state5 === 'circle'}">
+        </button>
       </div>
       <div class="col-4 border-bottom">
-        <button mat-button class="square" (click)="changeState($event.target!, 6)" [disabled]="state6 !== '' || !activeGame" [ngClass]="{'red': state6 === 'cross', 'blue': state6 === 'circle'}"></button>
+        <button mat-button class="square" id="button6"
+                (click)="changeState('button6', 6)" 
+                [disabled]="state6 !== '' || !activeGame" 
+                [ngClass]="{'red': state6 === 'cross', 'blue': state6 === 'circle'}">
+        </button>
       </div>
     </div>
     <div class="row m-0">
       <div class="col-4 border-right">
-        <button mat-button class="square" (click)="changeState($event.target!, 7)" [disabled]="state7 !== '' || !activeGame" [ngClass]="{'red': state7 === 'cross', 'blue': state7 === 'circle'}"></button>
+        <button mat-button class="square" id="button7"
+                (click)="changeState('button7', 7)" 
+                [disabled]="state7 !== '' || !activeGame" 
+                [ngClass]="{'red': state7 === 'cross', 'blue': state7 === 'circle'}">
+        </button>
       </div>
       <div class="col-4 border-right">
-        <button mat-button class="square" (click)="changeState($event.target!, 8)" [disabled]="state8 !== '' || !activeGame" [ngClass]="{'red': state8 === 'cross', 'blue': state8 === 'circle'}"></button>
+        <button mat-button class="square" id="button8"
+                (click)="changeState('button8', 8)" 
+                [disabled]="state8 !== '' || !activeGame" 
+                [ngClass]="{'red': state8 === 'cross', 'blue': state8 === 'circle'}">
+        </button>
       </div>
       <div class="col-4">
-        <button mat-button class="square" (click)="changeState($event.target!, 9)" [disabled]="state9 !== '' || !activeGame" [ngClass]="{'red': state9 === 'cross', 'blue': state9 === 'circle'}"></button>
+        <button mat-button class="square" id="button9"
+                (click)="changeState('button9', 9)" 
+                [disabled]="state9 !== '' || !activeGame" 
+                [ngClass]="{'red': state9 === 'cross', 'blue': state9 === 'circle'}">
+        </button>
       </div>
+    </div>
+  </div>
+  <!--Winner-->
+  <div *ngIf="!activeGame" class="row m-0 justify-content-center">
+    <div class="col-auto">
+      <h2>El ganador es: {{ winner }}</h2>
+    </div>
+  </div>
+  <!--Reset Game-->
+  <div *ngIf="!activeGame" class="row m-0 justify-content-center">
+    <div class="col-auto">
+      <button mat-raised-button color="accent" (click)="resetGame()">Jugar de nuevo</button>
     </div>
   </div>
 </section>
